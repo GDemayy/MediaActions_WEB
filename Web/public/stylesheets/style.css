@@ -1,0 +1,22 @@
+.sidebar-nav {
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+}
+
+
+html,
+body
+{
+    height: 100%;
+}
+
+page
+{
+    display: flex;
+    flex-direction: column;
+    min-height:  calc(100vh - 19.2vh);
+}
+footer {
+
+}
