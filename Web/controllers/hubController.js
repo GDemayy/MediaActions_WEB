@@ -11,11 +11,11 @@ exports.display = function(req, res, next)
 {
     if (req.user === 'undefined' || req.user == null)
         res.redirect('/login');
-    
-    // open a file called "lenna.png" 
+
+    // open a file called "lenna.png"
 
 ///home/demay/Documents/MediaAction/MediaActions/Web/public/uploads/pangovic.png', '/home/demay/Documents/MediaAction/MediaActions/Web/public/uploads/pangovic.png'
-     
+
     //equal will be true, if images looks the same
     //upload.any();
   res.render('hub', {title: 'Upload', user:req.user});
@@ -27,7 +27,7 @@ function checkphoto(str)
 
     query.exec(function (err, someValue) {
         if (err) return next(err);
-        
+
         if (someValue.length >= 1)
             {
                 var i = 0;
@@ -35,8 +35,8 @@ function checkphoto(str)
                     {
                         console.log(i);
                         console.log("public" + str + "\n" + "public\n" + someValue[i]['path']);
-                        //looksSame("public" + str, "public" + someValue[i]['path'], function(error, equal) 
-                        looksSame("./public/uploads/" + str, "/home/demay/Documents/MediaAction/MediaActions/Web/public/uploads/60109b344cb801d8d426a4c86123fcd9.png", function(error, equal) 
+                        //looksSame("public" + str, "public" + someValue[i]['path'], function(error, equal)
+                        looksSame("./public/uploads/" + str, "/home/demay/Documents/MediaAction/MediaActions/Web/public/uploads/60109b344cb801d8d426a4c86123fcd9.png", function(error, equal)
                             {
                                 console.log("IS EQUAL ? " + equal + "\npublic" + str + "public" + someValue[i]['path'], error);
                             });
@@ -68,10 +68,10 @@ function checkType(data)
 
 exports.upload = function(req, res, next)
 {
-    
+
   if (req.user === 'undefined' || req.user == null)
-      res.redirect('/login');    
-     
+      res.redirect('/login');
+
     console.log("log = " + req.body.name);
 
   var hubData = {
