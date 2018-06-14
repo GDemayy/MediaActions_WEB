@@ -1,1 +1,2 @@
+fuser -k 8080/tcp
 npm run devstart

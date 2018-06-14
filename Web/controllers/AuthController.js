@@ -2,14 +2,12 @@ var mongoose = require("mongoose");
 var passport = require("passport");
 var User = require("../models/users");
 var aes256 = require('aes256');
+var multer = require('multer');
 var userController = {};
-
+var upload = multer({dest: 'public/uploads/profile'})
 
 userController.home = function (req, res) {
-    
-       
     res.render('index', {user: req.user});
-    
 };
 
 userController.register = function (req, res) {
@@ -25,7 +23,7 @@ userController.doRegister = function (req, res, next) {
         res.send("passwords don't match");
         return next(err);
     }
-
+    //upload.any();
     if (req.body.email &&
         req.body.username &&
         req.body.password &&
@@ -44,6 +42,7 @@ userController.doRegister = function (req, res, next) {
             }
             passport.authenticate('local')(req, res, function (error, user) {
                 req.session.user = nuser;
+                upload.any();
                 res.render('index', {user: nuser});
             });
         });
@@ -51,9 +50,9 @@ userController.doRegister = function (req, res, next) {
 };
 
 userController.login = function(req, res) {
-        
-  
-        
+
+
+
     res.render('login', {user: req.user, error: null});
 };
 

@@ -1,15 +1,17 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
+var multer = require('multer');
+var upload = multer({dest: 'public/uploads/profile'})
 
 var auth = require('../controllers/AuthController');
 
 /* GET home page. */
 router.get('/login', auth.login);
 
-router.get('/register', auth.register);
+router.get('/register', upload.any(), auth.register);
 
-router.post('/register', auth.doRegister);
+router.post('/register', upload.any(), auth.doRegister);
 
 router.get('/login', auth.login);
 
