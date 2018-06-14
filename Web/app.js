@@ -7,18 +7,22 @@ var multer          = require('multer');
 var logger          = require('morgan');
 var path            = require('path');
 var upload          = multer({ dest: 'public/uploads/' })
+var looksSame       = require('looks-same');
+var Jimp            = require("jimp");
+var fs = require('fs');
 
 process.env.PUBLISHABLE_KEY = "pk_test_ZJLG415DZJo8y12cI829uctz";
 process.env.SECRET_KEY = "sk_test_VUqtqxDUiVKKvNjw4nKX0vqf";
 
+var api     = require('./routes/api');
 var contact = require('./routes/contact');
 var gallery = require('./routes/gallery');
-var api = require('./routes/api');
 var hub     = require('./routes/hub');
 var index   = require('./routes/index');
 var login   = require('./routes/login');
 var stripe  = require('./routes/stripe');
-var profil = require('./routes/profil');
+var profil  = require('./routes/profil');
+var purchases = require('./routes/purchases');
 
 
 var app     = express();
@@ -39,7 +43,6 @@ app.listen(4567);
 app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'pug');
 app.set('view engine', 'ejs')
-
 
 app.use(require('express-session') ({
   secret: 'keyboard cat',
@@ -74,14 +77,12 @@ User.findOne({username: username }, function (err, user) {
     }
     else
     {
-        console.log("ca marche");
         if (!user) {
-            app.use('/', login);
-            //return cb("login", false, {message: 'Incorrect username.'});
+            return cb("Incorrect username", false, {message: 'Incorrect username.'});
         }
 
         if (!user.validPassword(password)) {
-            return cb(null, false, {message: 'Incorrect Password.'});
+            return cb("Incorrect password" ,false, {message: 'Incorrect Password.'});
         }
         return (cb(null, user));
     }
@@ -135,6 +136,7 @@ app.use('/stripe', stripe);
 app.use('/api', api);
 app.use('/', contact);
 app.use('/', profil);
+app.use('/profil', purchases);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

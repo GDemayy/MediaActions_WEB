@@ -4,8 +4,12 @@ var User = require("../models/users");
 var aes256 = require('aes256');
 var userController = {};
 
+
 userController.home = function (req, res) {
+    
+       
     res.render('index', {user: req.user});
+    
 };
 
 userController.register = function (req, res) {
@@ -47,13 +51,21 @@ userController.doRegister = function (req, res, next) {
 };
 
 userController.login = function(req, res) {
-    res.render('login', {user: req.user});
+        
+  
+        
+    res.render('login', {user: req.user, error: null});
 };
 
 userController.doLogin = function(req, res, next) {
-    passport.authenticate('local')(req, res, function (error, user) {
+    passport.authenticate('local', { failureRedirect: '/login', successRedirect: '/' })(req, res, function (error, user) {
+        if (error)
+        {
+            console.log(error);
+            return res.render('login', {error: error});
+        }
         req.session.user = user;
-        res.render('index', {user: req.user});
+        return res.render('index', {user: req.user});
     });
 };
 
