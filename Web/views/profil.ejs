@@ -1,5 +1,20 @@
 <%- include layout.ejs %>
+<div class="row">
+    <div class="col-lg-12 text-center"><h1>Media Actions</h1></div>
+</div>
+<div class="row">
+    <div class="col-lg-12 text-center">
+      <p>PROFIL</p>
+    </div>
+    <p> SALUT</p>
+    <% if (image) { %>
+      <h2>-Your username <%= user.username %> email <%= user.email %> your picture</h2>
+      <img src='<%= image %>' width="500" height="500"/>
+      <img src=value=<%= image %>
+      <img src=value=<%= image %> width="20" height="40" alt="">
 
-<h1>Profil</h1>
 
-<%- include footer.ejs%>
+    <% } %>
+
+</div>
+<%- include footer.ejs %>

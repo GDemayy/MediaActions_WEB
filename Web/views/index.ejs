@@ -3,25 +3,11 @@
     <div class="col-lg-12 text-center"><h1>Media Actions</h1></div>
 </div>
 <div class="row">
-    <div class="col-lg-12 text-center"><p>Bienvenue sur Media Actions, le site de vente de photos en ligne.</p></div>
-    <img src="uploads/profile/cake.png" alt="">
-    <img src="/uploads/aa1a1f5e8d98d83028fe449355461fca" alt="Italian Trulli">
-    <% if (test) { %>
-         <h2>I have a game state!</h2>
-         <h1><%= test %></h1>
-         <img src=value=<%= test %> alt="">
-         <script>
-            var clientGameState = <%= test %>
-         </script>
-    <% } %>
+    <div class="col-lg-12 text-center">
+      <p>Bienvenue sur Media Actions, le site de vente de photos en ligne.</p>
+    </div>
 
-    <form action="/stripe/charge" method="post">
-        <%- test %>
-        <article>
-          <input type="hidden" name="imageID" value=<%= test %>>
-        </article>
 
-    </form>
-    </p>
+
 </div>
 <%- include footer.ejs %>
