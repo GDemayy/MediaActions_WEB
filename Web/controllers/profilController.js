@@ -12,7 +12,15 @@ function funkytown()
 }
 
 exports.profil = function(req, res, next) {
-    funkytown();
-    res.render('profil');
-
+  var image;
+  if (req.user)
+  {
+    if (req.user['path'])
+      var image = req.user['path'].replace('public','')
+  }
+  else {
+    image = "nopath"
+  }
+  funkytown();
+  res.render('profil', { title: 'Media actions', user: req.user, image: image});
 };
