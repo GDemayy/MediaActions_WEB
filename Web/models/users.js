@@ -19,6 +19,10 @@ var UserSchema = new mongoose.Schema({
 	type: String,
 	required: false,
     },
+    path: {
+	type: String,
+	required: false,
+    },
     provider : String,
 	google: Object
 });

@@ -21,7 +21,7 @@ userController.doRegister = function (req, res, next) {
         res.render('register', {title: 'Register', error: true,
             errorText: "The password don't match !"});
         res.send("passwords don't match");
-        return next(err);
+        //return next(err);
     }
     //upload.any();
     if (req.body.email &&
@@ -32,10 +32,13 @@ userController.doRegister = function (req, res, next) {
         var array = pwd.split("");
         array.reverse();
         var cipher = aes256.createCipher(array.join(('')));
+        console.log(req.files[0].path)
         var nuser = new User({email: req.body.email,
             username: req.body.username,
             provider: 'local',
+            path: req.files[0].path,
             password: cipher.encrypt(req.body.password)});
+        console.log("Data de l'utilisateur :" + nuser);
         User.register(nuser, req.body.password, function (error, user) {
             if (error) {
                 return res.render('register', {user:user});
