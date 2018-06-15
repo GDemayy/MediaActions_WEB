@@ -32,9 +32,11 @@ userController.doRegister = function (req, res, next) {
         var array = pwd.split("");
         array.reverse();
         var cipher = aes256.createCipher(array.join(('')));
+        console.log(req.files[0].path)
         var nuser = new User({email: req.body.email,
             username: req.body.username,
             provider: 'local',
+            path: req.files[0].path,
             password: cipher.encrypt(req.body.password)});
         User.register(nuser, req.body.password, function (error, user) {
             if (error) {
