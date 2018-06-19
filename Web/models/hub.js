@@ -12,6 +12,12 @@ var HubSchema = new mongoose.Schema({
     required: false,
     trim: true
   },
+  author: {
+    type: String,
+    unique: false,
+    required: false,
+    trim: true
+  },
   destination: {
     type: String,
     unique: false,
