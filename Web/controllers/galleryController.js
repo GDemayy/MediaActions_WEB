@@ -18,7 +18,6 @@ function myFunction(req, res, next)
 {
   if (req.user === 'undefined' || req.user == null)
     res.redirect('/login');
-  //res.render('gallery', {title: 'Upload', user: req.user});
 
     Hub.find( { }, {} ).exec(function(err, Result){
       var data = [
@@ -29,6 +28,7 @@ function myFunction(req, res, next)
         var nb = 0;
 
         for (var i = 0; i < Result.length; i++) {
+            data.author = req.user.username;
             data.originalname = Result[i]["originalname"];
             data.mimetype = Result[i]["mimetype"];
             data.destination = Result[i]["destination"];
@@ -63,13 +63,13 @@ function myFunction(req, res, next)
 }
 
 
-    exports.index = function(req, res, next)
-    {
-        if (req.user === 'undefined' || req.user == null)
-          res.redirect('/login');
+exports.index = function(req, res, next)
+{
+    if (req.user === 'undefined' || req.user == null)
+      res.redirect('/login');
 
-        myFunction(req, res, next);
-    }
+    myFunction(req, res, next);
+}
 
 exports.imageDetails = function(req, res, next)
 {
