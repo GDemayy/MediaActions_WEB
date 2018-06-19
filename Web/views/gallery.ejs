@@ -1,4 +1,18 @@
 <%- include layout.ejs %>
+
+<form id="searchid" class="form-horizontal" role="form" action="/gallery" method="post">
+  <div class="ui form">
+       <div class="field">
+        <input id="search" type="text" class="form-control" name="search" value="" placeholder="search" required="required">
+    </div>
+    <div style="margin-top:18px" class="form-group text-center">
+        <!-- Button -->
+        <div class="col-sm-12 controls">
+            <button type="submit" id="btn-login" href="#" class="btn btn-success">Search</button>
+        </div>
+    </div>
+</form>
+
  <%
         var i = 0;
         var nb = 0;
