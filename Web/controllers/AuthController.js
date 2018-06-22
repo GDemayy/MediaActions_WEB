@@ -66,10 +66,7 @@ userController.doRegister = function (req, res, next) {
 };
 
 userController.login = function(req, res) {
-
-
-
-    res.render('login', {user: req.user, error: null});
+  res.render('login', {user: req.user, error: null});
 };
 
 userController.doLogin = function(req, res, next) {

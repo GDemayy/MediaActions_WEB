@@ -42,7 +42,6 @@ function myFunction(req, res, next)
 
             if (data.description == null)
                 data.description = "DESCRIPTION";
-
             nb++;
             images.push(
                 data.path,
@@ -51,7 +50,6 @@ function myFunction(req, res, next)
                 data.price,
             );
         }
-
         res.render('gallery', { title: 'Media actions',
         data: images,
         nbImages: nb * 4,
@@ -67,46 +65,40 @@ exports.search = function(req, res, next)
     search = req.body.search;
     if (req.body.search)
     {
-          Hub.find({author: search}).exec(function(err, Result){
-            var data = [
-              [String, String]
-            ]
+      Hub.find({author: search}).exec(function(err, Result){
+        var data = [
+          [String, String]
+        ]
+          var images = [];
+          for (var i = 0; i < Result.length; i++) {
+              data.author = req.user.username;
+              data.originalname = Result[i]["originalname"];
+              data.mimetype = Result[i]["mimetype"];
+              data.destination = Result[i]["destination"];
+              data.filename = Result[i]["filename"];
+              data.path = "<img alt='Poster' id='poster' style=\"min-height: 300px; max-height: 300px;visibility: visible\" class='img-thumbnail' src='" + Result[i]["path"] + "'>";
+              data.size = Result[i]["size"];
+              data.date = Result[i]["date"];
+              data.visibleName = Result[i]["visibleName"];
+              data.description = Result[i]["description"];
+              data.price = "Price: " + Result[i]["price"] + " €";
 
-              var images = [];
-              var nb = 0;
-
-              for (var i = 0; i < Result.length; i++) {
-                  data.author = req.user.username;
-                  data.originalname = Result[i]["originalname"];
-                  data.mimetype = Result[i]["mimetype"];
-                  data.destination = Result[i]["destination"];
-                  data.filename = Result[i]["filename"];
-                  data.path = "<img alt='Poster' id='poster' style=\"min-height: 300px; max-height: 300px;visibility: visible\" class='img-thumbnail' src='" + Result[i]["path"] + "'>";
-                  data.size = Result[i]["size"];
-                  data.date = Result[i]["date"];
-                  data.visibleName = Result[i]["visibleName"];
-                  data.description = Result[i]["description"];
-                  data.price = "Price: " + Result[i]["price"] + " €";
-
-                  if (data.description == null)
-                      data.description = "DESCRIPTION";
-
-                  nb++;
-                  images.push(
-                      data.path,
-                      data.visibleName,
-                      data.description,
-                      data.price,
-                  );
-              }
-
-              res.render('gallery', { title: 'Media actions',
-              data: images,
-              nbImages: nb * 4,
-              user: req.user
-              });
-            })
-
+              if (data.description == null)
+                  data.description = "DESCRIPTION";
+              nb++;
+              images.push(
+                  data.path,
+                  data.visibleName,
+                  data.description,
+                  data.price,
+              );
+          }
+          res.render('gallery', { title: 'Media actions',
+          data: images,
+          nbImages: nb * 4,
+          user: req.user
+          });
+        })
     }
 
     //res.redirect('/profil');
