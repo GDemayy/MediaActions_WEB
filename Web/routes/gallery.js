@@ -7,6 +7,8 @@ var galery_controller = require('../controllers/galleryController');
 
 /* GET home page. */
 router.get('/gallery', galery_controller.index);
+router.post('/gallery', galery_controller.search);
+
 router.post('/details', galery_controller.imageDetails);
 //router.post('/gallery', upload.any(), hub_controller.upload);
 

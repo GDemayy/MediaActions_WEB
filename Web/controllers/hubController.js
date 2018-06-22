@@ -75,6 +75,7 @@ exports.upload = function(req, res, next)
     console.log("log = " + req.body.name);
 
   var hubData = {
+      author: req.user.username,
       originalname: req.files[0].originalname,
       mimetype: req.files[0].mimetype,
       destination: req.files[0].destination,
