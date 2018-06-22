@@ -60,14 +60,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 var publicDir = require('path').join(__dirname,'/public');
 app.use(express.static(publicDir));
-/*passport.use(new LocalStrategy(function (username, password, done) {
-    User.findOne({ username: username }, function (err, user) {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false); }
-        if (!user.verifyPassword(password)) { return done(null, false); }
-        return done(null, user);
-    });
-}));*/
+
 passport.use(new LocalStrategy(
     function(username, password, cb) {
 User.findOne({username: username }, function (err, user) {
@@ -120,7 +113,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
