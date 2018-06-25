@@ -38,7 +38,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 var User = require('./models/users');
-app.listen(8000);
+app.listen(8080);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
