@@ -13,14 +13,14 @@ apiController.login = function (req, res) {
         if (error) res.status(401).json({error: error});
         else res.json({user: req.user});
     });
-}; 
+};
 
 apiController.register = function (req, res) {
-    if (req.body.password !== req.body.passwordConf) {
-        res.status(401);
-        return res.json({error : 'Password don\'t match!]'});
-    }
-
+  if (req.body.password !== req.body.passwordConf)
+  {
+      res.status(401);
+      return res.json({error : 'Password don\'t match!]'});
+  }
     if (req.body.email &&
         req.body.username &&
         req.body.password &&
@@ -90,7 +90,7 @@ apiController.gallery = function(req, response) {
     return Hub.find( {}, {} ).exec(function (err, result) {
         const images = makeImageList(result);
         return response.json({images});
-    });
+
 };
 
 apiController.searchquery = (req, response) => {
