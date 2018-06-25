@@ -49,31 +49,63 @@ apiController.register = function (req, res) {
     }
 };
 
-apiController.gallery = function(req, res) {
-  Hub.find ( {}, {} ).exec(function (err, Result) {
-      var data = [
-          [String, String]
-      ]
-      var images = [];
-      for (var i = 0; i < Result.length; i++)
-      {
-          data.originalname = Result[i]["originalname"];
-          data.mimetype = Result[i]["mimetype"];
-          data.destination = Result[i]["destination"];
-          data.filename = Result[i]["filename"];
-          data.path = Result[i]["path"];
-          data.size = Result[i]["size"];
-          data.visibleName = Result[i]["visibleName"];
-          data.description = Result[i]["description"];
-          data.price = Result[i]["price"];
-          if (data.description == null)
-              data.description = "null";
-          nb++;
-          images.push({Path: data.path, Name: data.visibleName, Description: data.description, Price: data.price});
-      }
-      res.json({images});
-  });
+const makeImageList = (Result) => {
+    var data = [
+        [String, String]
+    ]
+
+    console.log(Result);
+
+    var images = [];
+    var nb = 0;
+
+    for (var i = 0; i < Result.length; i++)
+    {
+        data.originalname = Result[i]["originalname"];
+        data.mimetype = Result[i]["mimetype"];
+        data.destination = Result[i]["destination"];
+        data.filename = Result[i]["filename"];
+        data.path = Result[i]["path"];
+        data.size = Result[i]["size"];
+        data.visibleName = Result[i]["visibleName"];
+        data.description = Result[i]["description"];
+        data.price = Result[i]["price"];
+
+        if (data.description == null)
+            data.description = "null";
+        nb++;
+        images.push({Path: data.path, Name: data.visibleName, Description: data.description, Price: data.price});
+    }
+  return images;
+}
+
+apiController.useruploads = (req, response) => {
+    return Hub.find({ author: req.body.username }).exec((err, result) => {
+        const images = makeImageList(result);
+        return response.json({images})
+    });
+}
+
+apiController.gallery = function(req, response) {
+    return Hub.find( {}, {} ).exec(function (err, result) {
+        const images = makeImageList(result);
+        return response.json({images});
+
 };
+
+apiController.searchquery = (req, response) => {
+    return Hub.find({ visibleName : req.body.searchquery }).exec((err, result) => {
+        const images = makeImageList(result);
+        return response.json({images});
+    });
+}
+
+
+apiController.userprofile = (req, response) => {
+    User.find({ username: req.body.username }).exec((err, result) => {
+        return response.json({ user: result });
+    });
+}
 
 
 module.exports = apiController;

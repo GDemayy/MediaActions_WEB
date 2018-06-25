@@ -58,5 +58,10 @@ router.post('/upload', function (req, res) {
       });
   })
 });
+
 router.get('/gallery', api.gallery);
+router.post('/search', api.searchquery);
+router.post('/uploads', api.useruploads);
+router.post('/profile', api.userprofile);
+
 module.exports = router;
