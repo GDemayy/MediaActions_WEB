@@ -6,7 +6,7 @@ const MAIL_PASS = "contact";
 
 exports.show = function(req, res, next) {
 
-    res.render('contact', {result: "none", user:req.user});
+    res.render('contact', {result: "none", user : req.user});
 };
 
 exports.send = function(req, res, next) {
@@ -17,7 +17,7 @@ exports.send = function(req, res, next) {
       service: 'gmail',
       auth: {
         user: 'mediaactionsfrance@gmail.com',
-        pass: 'TeamKSO64Ever' // Le mot de passe, tu vas faire quoi? :hap:
+        pass: 'TeamKSO64Ever' // Le mot de passe est en dur, tu vas faire quoi? :hap:
       }
     });
     var mailOptions = {

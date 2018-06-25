@@ -1,2 +1,2 @@
-fuser -k 8000/tcp
+fuser -k 8765/tcp
 npm run devstart

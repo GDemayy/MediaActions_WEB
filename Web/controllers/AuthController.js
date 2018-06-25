@@ -24,49 +24,39 @@ userController.doRegister = function (req, res, next) {
         //return next(err);
     }
     //upload.any();
-    if (req.body.email && req.body.username && req.body.password && req.body.passwordConf)
-    {
-        var i = 0;
-        var contact = 0;
+    if (req.body.email &&
+        req.body.username &&
+        req.body.password &&
+        req.body.passwordConf) {
         var pwd = req.body.password;
-        while (pwd[i])
-        {
-            if (pwd[i] < "0" || (pwd[i] > "9" && pwd[i] < "A") || (pwd[i] > "Z" && pwd[i] < "a") || pwd[i] > "z")
-                contact = 1;
-            i++;
-        }
-        if (i >= 8 && contact == 0) {
-            var array = pwd.split("");
-            array.reverse();
-            var cipher = aes256.createCipher(array.join(('')));
-            console.log(req.files[0].path)
-            var nuser = new User({
-                email: req.body.email,
-                username: req.body.username,
-                provider: 'local',
-                path: req.files[0].path,
-                password: cipher.encrypt(req.body.password)
+        var array = pwd.split("");
+        array.reverse();
+        var cipher = aes256.createCipher(array.join(('')));
+        console.log(req.files[0].path)
+        var nuser = new User({email: req.body.email,
+            username: req.body.username,
+            provider: 'local',
+            path: req.files[0].path,
+            password: cipher.encrypt(req.body.password)});
+        console.log("Data de l'utilisateur :" + nuser);
+        User.register(nuser, req.body.password, function (error, user) {
+            if (error) {
+                return res.render('register', {user:user});
+            }
+            passport.authenticate('local')(req, res, function (error, user) {
+                req.session.user = nuser;
+                upload.any();
+                res.render('index', {user: nuser});
             });
-            console.log("Data de l'utilisateur :" + nuser);
-            User.register(nuser, req.body.password, function (error, user) {
-                if (error) {
-                    return res.render('register', { user: user });
-                }
-                passport.authenticate('local')(req, res, function (error, user) {
-                    req.session.user = nuser;
-                    upload.any();
-                    res.render('index', { user: nuser });
-                });
-            });
-        }
-        else {
-            return res.render('register', { user: user });
-        }
+        });
     }
 };
 
 userController.login = function(req, res) {
-  res.render('login', {user: req.user, error: null});
+
+
+
+    res.render('login', {user: req.user, error: null});
 };
 
 userController.doLogin = function(req, res, next) {
